@@ -47,7 +47,7 @@ public class QuickSortSequencial {
         ArrayList<String> results = new ArrayList<>();
         results.add("Tamanho,Tempo"); 
 
-        int[] sizes = {5,10,50,100,1000};
+        int[] sizes = {100,500,1000,3500,5000};
 
         for (int size : sizes) {
             int[] arraySerial = generateRandomArray(size);

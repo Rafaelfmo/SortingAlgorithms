@@ -11,7 +11,6 @@ public class BubbleSortSequencial {
         for (int i = start; i < end; i++){
             for (int j = i+1; j < end; j++){
                 if (array[i] > array[j]){
-                    // Troca os elementos
                     temp = array[i];
                     array[i] = array[j];
                     array[j] = temp;
@@ -21,7 +20,6 @@ public class BubbleSortSequencial {
     }
 
     public static void parallelBubbleSort(int[] array, int numThreads) {
-        // Se o numero de threads for menor ou igual a 0, usa o numero de processadores disponiveis
         if (numThreads <= 0) {
             numThreads = Runtime.getRuntime().availableProcessors();
         }
@@ -30,14 +28,12 @@ public class BubbleSortSequencial {
 
         
 
-        // Cria as threads e inicia a ordenacao
         for (int i = 0; i < numThreads; i++){
             int start = i * chunkSize;
             int end = (i == numThreads - 1) ? array.length : (i + 1) * chunkSize;
             executor.submit(() -> indexedBubbleSort(array, start, end));
         }
 
-        // Fecha o executor e espera todas as threads terminarem
         executor.shutdown();
         try {
             executor.awaitTermination(Long.MAX_VALUE, java.util.concurrent.TimeUnit.NANOSECONDS);
@@ -59,7 +55,7 @@ public class BubbleSortSequencial {
         ArrayList<String> results = new ArrayList<>();
         results.add("Tamanho,Tempo");
 
-        int sizes[] = {5, 10, 50, 100, 1000};
+        int sizes[] = {100,500,1000,3500,5000};
 
         for (int size : sizes){
             int[] arraySerial = generateRandomArray(size);

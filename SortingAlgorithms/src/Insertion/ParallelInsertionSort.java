@@ -8,7 +8,7 @@ import java.util.concurrent.RecursiveAction;
 public class ParallelInsertionSort extends RecursiveAction {
     private int[] arr;
     private int start, end;
-    private int threshold; // Limite para a quantidade de dados por thread
+    private int threshold; 
 
     public ParallelInsertionSort(int[] arr, int start, int end, int threshold) {
         this.arr = arr;
@@ -44,21 +44,17 @@ public class ParallelInsertionSort extends RecursiveAction {
     }
 
     private void merge(int[] arr, int start, int mid, int end) {
-        // Calculate sizes of two subarrays to be merged
         int n1 = mid - start + 1;
         int n2 = end - mid;
     
-        // Create temp arrays
         int L[] = new int[n1];
         int R[] = new int[n2];
     
-        //Copy data to temp arrays
         for (int i = 0; i < n1; ++i)
             L[i] = arr[start + i];
         for (int j = 0; j < n2; ++j)
             R[j] = arr[mid + 1 + j];
     
-        // Merge the temp arrays back into arr[start..end]
         int i = 0, j = 0;
         int k = start;
         while (i < n1 && j < n2) {
@@ -72,14 +68,12 @@ public class ParallelInsertionSort extends RecursiveAction {
             k++;
         }
     
-        // Copy remaining elements of L[] if any
         while (i < n1) {
             arr[k] = L[i];
             i++;
             k++;
         }
     
-        // Copy remaining elements of R[] if any
         while (j < n2) {
             arr[k] = R[j];
             j++;
@@ -104,9 +98,9 @@ public class ParallelInsertionSort extends RecursiveAction {
 
     public static void main(String[] args) throws InterruptedException {
         
-        int[] sizes = {1000, 10000, 100000, 1000000};
+        int[] sizes = {100,500,1000,3500,5000};
         int maxThreads = 8;
-        int maxExecutions = 5;
+        int maxExecutions = 8;
         
         for (int size : sizes) {
             for (int i = 1; i <= maxThreads; i++) {
@@ -118,22 +112,21 @@ public class ParallelInsertionSort extends RecursiveAction {
                 for (int j = 0; j < size; j++) {
                     arr[j] = new Random().nextInt(1000);
                 }
-                
-                System.out.println("\nArray size: " + size);
-    
-                int numberOfThreads = i; // Número de threads a ser usado
+                System.out.println(arr);
+                    
+                int numberOfThreads = i; 
         
                 if (numberOfThreads <= 0) {
                     numberOfThreads = Runtime.getRuntime().availableProcessors();
                 }
         
-                int threshold = arr.length / numberOfThreads; // Limite para divisão do trabalho por thread
+                int threshold = arr.length / numberOfThreads; 
                 ForkJoinPool pool = new ForkJoinPool(numberOfThreads);
         
                 try {
                     pool.invoke(new ParallelInsertionSort(arr, 0, arr.length - 1, threshold));
         
-                    // Wait for the pool to complete
+                    
                     pool.shutdown();
         
                     pool.awaitTermination(Long.MAX_VALUE, java.util.concurrent.TimeUnit.NANOSECONDS);
@@ -142,9 +135,6 @@ public class ParallelInsertionSort extends RecursiveAction {
 
                 }
                 
-                System.out.println("Tempo: " + (System.nanoTime() - startTime) + "ns");
-    
-    
                 printExecutionTimes(size, numberOfThreads, System.nanoTime() - startTime);
 
                 }
