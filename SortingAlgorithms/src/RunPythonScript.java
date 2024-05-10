@@ -1,4 +1,6 @@
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class RunPythonScript {
 
@@ -22,7 +24,10 @@ public class RunPythonScript {
     }
 
     public static void main(String[] args) {
-        // pythonScript("serial");
-        pythonScript("paralelo");
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        executor.submit(() -> pythonScript("serial"));
+        executor.submit(() -> pythonScript("paralelo"));
+
+        executor.shutdown();
     }
 }

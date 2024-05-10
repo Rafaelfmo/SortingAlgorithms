@@ -1,5 +1,7 @@
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
+from plotly.graph_objs.layout import XAxis
 
 pd.options.plotting.backend = "plotly"
 
@@ -13,18 +15,30 @@ data_merge_mean = data_merge_paralelo.groupby(['Tamanho', 'Threads'])['Tempo'].m
 data_insertion_mean = data_insertion_paralelo.groupby(['Tamanho', 'Threads'])['Tempo'].mean().reset_index()
 data_quick_mean = data_quick_paralelo.groupby(['Tamanho', 'Threads'])['Tempo'].mean().reset_index()
 
+fig = go.Figure()
 
-fig = px.histogram({"Merge Sort": data_merge_mean["Tempo"],
-                    "Bubble Sort": data_bubble_mean["Tempo"],
-                    "Insertion Sort": data_insertion_mean["Tempo"],
-                    "Quick Sort": data_quick_mean["Tempo"]},
-                    x=data_merge_mean["Tamanho"],
-                    y=["Merge Sort", "Bubble Sort", "Insertion Sort", "Quick Sort"],
-                    color=data_merge_mean["Threads"],
-                    title="Tempo de execução dos algoritmos de ordenação paralela",
-                    labels={"value": "Tempo", "index": "Tamanho do vetor"},
-                    template="plotly_dark",
-                    color_discrete_map={1: "red", 2: "blue", 4: "green", 8: "yellow"}
-                   )
+fig.add_trace(go.Histogram(x=data_bubble_mean['Tamanho'], y=data_bubble_mean['Tempo'], name='Bubble Sort', histfunc='avg'))
+fig.add_trace(go.Histogram(x=data_merge_mean['Tamanho'], y=data_merge_mean['Tempo'], name='Merge Sort', histfunc='avg'))
+fig.add_trace(go.Histogram(x=data_insertion_mean['Tamanho'], y=data_insertion_mean['Tempo'], name='Insertion Sort', histfunc='avg'))
+fig.add_trace(go.Histogram(x=data_quick_mean['Tamanho'], y=data_quick_mean['Tempo'], name='Quick Sort', histfunc='avg'))
+
+datas = [data_bubble_mean,data_merge_mean,data_insertion_mean,data_quick_mean]
+nome = ['Bubble Sort', 'Merge Sort', 'Insertion Sort', 'Quick Sort']
+for threads in data_bubble_mean['Threads'].unique():
+    for i, dataframe in  enumerate(datas):
+        fig.add_trace(go.Histogram(x=dataframe[dataframe['Threads'] == threads]['Tamanho'], y = dataframe[dataframe['Threads'] == threads]['Tempo'],\
+            name=f'{nome[i]} Com {threads}', histfunc='avg'))
+
+
+fig.update_layout(xaxis2 = XAxis( 
+                                    overlaying='x',
+                                    side='top',
+                                ),
+                  xaxis_title='Tamanho', 
+                  yaxis_title='Tempo', 
+                  title='Tempo de execução dos algoritmos de ordenação paralela', 
+                  template='plotly_dark',
+                  legend_title='Algoritmos de ordenação'
+                  )
+
 fig.show()
-
