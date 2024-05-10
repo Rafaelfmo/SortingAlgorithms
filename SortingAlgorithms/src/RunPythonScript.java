@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.Serial;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -23,8 +24,21 @@ public class RunPythonScript {
         }
     }
 
-    public static void main(String[] args) {
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+    public static void main(String[] args) throws Exception {
+        System.out.println("Starting Bubble");
+        BubbleSortParalelo.main(args);
+        BubbleSortSequencial.main(args);
+        System.out.println("Starting Insertion");
+        ParallelInsertionSort.main(args);
+        InsertionSort.main(args);
+        System.out.println("Starting Merge");
+        MergeSortParalelo.main(args);
+        MergeSortSequencial.main(args);
+        System.out.println("Starting Quick");
+        QuickSortParalelo.main(args);
+        QuickSortSequencial.main(args);
+        System.out.println("All algorithms done! Starting python scripts...");
+        ExecutorService executor = Executors.newFixedThreadPool(8);
         executor.submit(() -> pythonScript("serial"));
         executor.submit(() -> pythonScript("paralelo"));
 
