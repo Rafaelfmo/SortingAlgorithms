@@ -2,7 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
 
-public class InsertionSort {
+public class InsertionSortSequencial {
     public void sort(int[] arr) {
         int n = arr.length;
         for (int i = 1; i < n; ++i) {
@@ -32,7 +32,7 @@ public class InsertionSort {
                     arr[j] = new Random().nextInt(1000);
                 }
 
-                InsertionSort ob = new InsertionSort();
+                InsertionSortSequencial ob = new InsertionSortSequencial();
 
                 long startTime = System.nanoTime();
                 ob.sort(arr);

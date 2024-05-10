@@ -1,16 +1,15 @@
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
-public class ParallelInsertionSort extends RecursiveAction {
+public class InsertionSortParalelo extends RecursiveAction {
     private int[] arr;
     private int start, end;
     private int threshold; 
 
-    public ParallelInsertionSort(int[] arr, int start, int end, int threshold) {
+    public InsertionSortParalelo(int[] arr, int start, int end, int threshold) {
         this.arr = arr;
         this.start = start;
         this.end = end;
@@ -25,8 +24,8 @@ public class ParallelInsertionSort extends RecursiveAction {
         }
 
         int mid = (start + end) / 2;
-        ParallelInsertionSort left = new ParallelInsertionSort(arr, start, mid, threshold);
-        ParallelInsertionSort right = new ParallelInsertionSort(arr, mid + 1, end, threshold);
+        InsertionSortParalelo left = new InsertionSortParalelo(arr, start, mid, threshold);
+        InsertionSortParalelo right = new InsertionSortParalelo(arr, mid + 1, end, threshold);
         invokeAll(left, right);
         merge(arr, start, mid, end);
     }
@@ -81,27 +80,14 @@ public class ParallelInsertionSort extends RecursiveAction {
         }
     }
 
-    private static void printExecutionTimes(int size, int numThreads, long time) {
-        try {
-            FileWriter writer = new FileWriter("parallel_insertion_sort.csv", true);
-            PrintWriter printWriter = new PrintWriter(writer);
-
-            printWriter.println(size + "," + numThreads + "," + time);
-
-            printWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-    public static void main(String[] args) throws InterruptedException {
-        
+    public static void main(String[] args) throws InterruptedException, IOException {
+        final StringBuilder csvData = new StringBuilder();
         int[] sizes = {100,500,1000,3500,5000};
         int maxThreads = 8;
         int maxExecutions = 8;
         
+        csvData.append("Tamanho,Threads,Tempo\n");
+
         for (int size : sizes) {
             for (int i = 1; i <= maxThreads; i++) {
                 for (int k = 0; k < maxExecutions; k++) {
@@ -112,8 +98,6 @@ public class ParallelInsertionSort extends RecursiveAction {
                 for (int j = 0; j < size; j++) {
                     arr[j] = new Random().nextInt(1000);
                 }
-                System.out.println(arr);
-                    
                 int numberOfThreads = i; 
         
                 if (numberOfThreads <= 0) {
@@ -124,7 +108,7 @@ public class ParallelInsertionSort extends RecursiveAction {
                 ForkJoinPool pool = new ForkJoinPool(numberOfThreads);
         
                 try {
-                    pool.invoke(new ParallelInsertionSort(arr, 0, arr.length - 1, threshold));
+                    pool.invoke(new InsertionSortParalelo(arr, 0, arr.length - 1, threshold));
         
                     
                     pool.shutdown();
@@ -134,12 +118,16 @@ public class ParallelInsertionSort extends RecursiveAction {
                     pool.shutdownNow();
 
                 }
+
+                csvData.append(size).append(",").append(numberOfThreads).append(",").append(System.nanoTime() - startTime).append("\n");
                 
-                printExecutionTimes(size, numberOfThreads, System.nanoTime() - startTime);
 
                 }
             }
         }
         
+        FileWriter csvWriter = new FileWriter("parallel_insertion_sort.csv");
+        csvWriter.write(csvData.toString());
+        csvWriter.close();
     }
 }

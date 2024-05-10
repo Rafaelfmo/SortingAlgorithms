@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.Serial;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,8 +28,8 @@ public class RunPythonScript {
         BubbleSortParalelo.main(args);
         BubbleSortSequencial.main(args);
         System.out.println("Starting Insertion");
-        ParallelInsertionSort.main(args);
-        InsertionSort.main(args);
+        InsertionSortParalelo.main(args);
+        InsertionSortSequencial.main(args);
         System.out.println("Starting Merge");
         MergeSortParalelo.main(args);
         MergeSortSequencial.main(args);
