@@ -5,10 +5,10 @@ from plotly.graph_objs.layout import XAxis
 
 pd.options.plotting.backend = "plotly"
 
-data_bubble_paralelo = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\bubble_sort_paralelo.csv")
-data_merge_paralelo = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\merge_sort_paralelo.csv")
-data_insertion_paralelo = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\parallel_insertion_sort.csv")
-data_quick_paralelo = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\quick_sort_paralelo.csv")
+data_bubble_paralelo = pd.read_csv("bubble_sort_paralelo.csv")
+data_merge_paralelo = pd.read_csv("merge_sort_paralelo.csv")
+data_insertion_paralelo = pd.read_csv("parallel_insertion_sort.csv")
+data_quick_paralelo = pd.read_csv("quick_sort_paralelo.csv")
 
 data_bubble_mean = data_bubble_paralelo.groupby(['Tamanho', 'Threads'])['Tempo'].mean().reset_index()
 data_merge_mean = data_merge_paralelo.groupby(['Tamanho', 'Threads'])['Tempo'].mean().reset_index()

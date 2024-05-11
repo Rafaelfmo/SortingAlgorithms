@@ -3,10 +3,10 @@ import plotly.express as px
 
 pd.options.plotting.backend = "plotly"
 
-data_bubble_serial = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\bubble_sort_serial.csv")
-data_merge_serial = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\merge_sort_serial.csv")
-data_insertion_serial = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\serial_insertion_sort.csv")
-data_quick_serial = pd.read_csv("C:\\Users\\Rafael Oliveira\\Desktop\\AV2\\quick_sort_serial.csv")
+data_bubble_serial = pd.read_csv("bubble_sort_serial.csv")
+data_merge_serial = pd.read_csv("merge_sort_serial.csv")
+data_insertion_serial = pd.read_csv("serial_insertion_sort.csv")
+data_quick_serial = pd.read_csv("quick_sort_serial.csv")
 
 fig = px.line({"Merge Sort": data_merge_serial["Tempo"], 
                "Bubble Sort": data_bubble_serial["Tempo"], 

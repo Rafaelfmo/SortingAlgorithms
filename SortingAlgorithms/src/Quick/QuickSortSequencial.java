@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class QuickSortSequencial {
-     
+
     public static void quickSortSerial(int[] arr) {
         quickSort(arr, 0, arr.length - 1);
     }
@@ -35,9 +35,9 @@ public class QuickSortSequencial {
         arr[j] = temp;
     }
 
-    public static int[] generateRandomArray(int size){
+    public static int[] generateRandomArray(int size) {
         int[] array = new int[size];
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             array[i] = (int) (Math.random() * 1000);
         }
         return array;
@@ -45,9 +45,9 @@ public class QuickSortSequencial {
 
     public static void main(String[] args) {
         ArrayList<String> results = new ArrayList<>();
-        results.add("Tamanho,Tempo"); 
+        results.add("Tamanho,Tempo");
 
-        int[] sizes = {100,500,1000,3500,5000};
+        int[] sizes = { 100, 500, 1000, 3500, 5000 };
 
         for (int size : sizes) {
             int[] arraySerial = generateRandomArray(size);
@@ -56,8 +56,8 @@ public class QuickSortSequencial {
             quickSortSerial(arraySerial);
             long endTime = System.nanoTime();
             long serialTime = endTime - startTime;
-    
-            results.add(size + "," + serialTime); 
+
+            results.add(size + "," + serialTime);
         }
 
         writeResultsToCSV(results);

@@ -7,11 +7,11 @@ import java.util.concurrent.Executors;
 
 public class BubbleSortParalelo {
 
-     public static void indexedBubbleSort(int[] array, int start, int end) {
+    public static void indexedBubbleSort(int[] array, int start, int end) {
         int temp;
-        for (int i = start; i < end; i++){
-            for (int j = i+1; j < end; j++){
-                if (array[i] > array[j]){
+        for (int i = start; i < end; i++) {
+            for (int j = i + 1; j < end; j++) {
+                if (array[i] > array[j]) {
                     temp = array[i];
                     array[i] = array[j];
                     array[j] = temp;
@@ -27,9 +27,7 @@ public class BubbleSortParalelo {
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
         int chunkSize = array.length / numThreads;
 
-        
-
-        for (int i = 0; i < numThreads; i++){
+        for (int i = 0; i < numThreads; i++) {
             int start = i * chunkSize;
             int end = (i == numThreads - 1) ? array.length : (i + 1) * chunkSize;
             executor.submit(() -> indexedBubbleSort(array, start, end));
@@ -44,26 +42,26 @@ public class BubbleSortParalelo {
 
     }
 
-    public static int[] generateRandomArray(int size){
+    public static int[] generateRandomArray(int size) {
         int[] array = new int[size];
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             array[i] = (int) (Math.random() * 1000);
         }
         return array;
     }
-    
+
     public static void main(String[] args) throws Exception {
-        
+
         ArrayList<String> results = new ArrayList<>();
         results.add("Tamanho,Threads,Tempo");
-        int sizes[] = {100,500,1000,3500,5000};
+        int sizes[] = { 100, 500, 1000, 3500, 5000 };
 
-        for (int size : sizes){
+        for (int size : sizes) {
             int[] arraySerial = generateRandomArray(size);
             int[] arrayParallel = null;
 
             long startTime = System.nanoTime();
-            
+
             for (int numThreads = 1; numThreads <= 8; numThreads++) {
                 for (int i = 0; i < 8; i++) {
                     arrayParallel = Arrays.copyOf(arraySerial, arraySerial.length);
@@ -71,7 +69,7 @@ public class BubbleSortParalelo {
                     parallelBubbleSort(arrayParallel, numThreads);
                     long endTime = System.nanoTime();
                     long parallelTime = endTime - startTime;
-    
+
                     results.add(size + "," + numThreads + "," + parallelTime);
                 }
             }

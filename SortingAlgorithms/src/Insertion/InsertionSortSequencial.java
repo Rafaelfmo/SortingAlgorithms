@@ -25,7 +25,6 @@ public class InsertionSortSequencial {
             for (int size : sizes) {
                 long totalTime = 0;
 
-                
                 int[] arr = new int[size];
 
                 for (int j = 0; j < size; j++) {
@@ -51,7 +50,7 @@ public class InsertionSortSequencial {
     }
 
     public static void main(String args[]) {
-        int[] sizes = {100,500,1000,3500,5000};
+        int[] sizes = { 100, 500, 1000, 3500, 5000 };
 
         printExecutionTimes(sizes);
 

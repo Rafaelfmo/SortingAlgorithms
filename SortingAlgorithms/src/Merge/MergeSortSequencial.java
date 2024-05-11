@@ -7,39 +7,38 @@ public class MergeSortSequencial {
   public static void merge(int[] a, int[] l, int[] r, int left, int right) {
     int i = 0, j = 0, k = 0;
     while (i < left && j < right) {
-        if (l[i] <= r[j]) {
-            a[k++] = l[i++];
-        }
-        else {
-            a[k++] = r[j++];
-        }
+      if (l[i] <= r[j]) {
+        a[k++] = l[i++];
+      } else {
+        a[k++] = r[j++];
+      }
     }
     while (i < left) {
-        a[k++] = l[i++];
+      a[k++] = l[i++];
     }
     while (j < right) {
-        a[k++] = r[j++];
+      a[k++] = r[j++];
     }
   }
 
   public static void mergeSort(int[] v, int left, int right) {
     if (left < right) {
-        int middle = (left + right) / 2;
-        int[] leftArray = new int[middle - left + 1];
-        int[] rightArray = new int[right - middle];
-    
-        for (int i = 0; i < leftArray.length; i++) {
-            leftArray[i] = v[left + i];
-        }
-    
-        for (int i = 0; i < rightArray.length; i++) {
-            rightArray[i] = v[middle + i + 1];
-        }
-    
-        mergeSort(leftArray, 0, leftArray.length - 1);
-        mergeSort(rightArray, 0, rightArray.length - 1);
-    
-        merge(v, leftArray, rightArray, leftArray.length, rightArray.length);
+      int middle = (left + right) / 2;
+      int[] leftArray = new int[middle - left + 1];
+      int[] rightArray = new int[right - middle];
+
+      for (int i = 0; i < leftArray.length; i++) {
+        leftArray[i] = v[left + i];
+      }
+
+      for (int i = 0; i < rightArray.length; i++) {
+        rightArray[i] = v[middle + i + 1];
+      }
+
+      mergeSort(leftArray, 0, leftArray.length - 1);
+      mergeSort(rightArray, 0, rightArray.length - 1);
+
+      merge(v, leftArray, rightArray, leftArray.length, rightArray.length);
     }
   }
 
@@ -50,7 +49,7 @@ public class MergeSortSequencial {
 
     csvData.append("Tamanho,Tempo\n");
 
-    int[] sizes = {100,500,1000,3500,5000};
+    int[] sizes = { 100, 500, 1000, 3500, 5000 };
 
     for (int size : sizes) {
       long totalTime = 0;

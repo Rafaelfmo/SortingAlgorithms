@@ -30,7 +30,6 @@ public class QuickSortParalelo {
         }
     }
 
-
     private static void quickSort(int[] arr, int low, int high, ExecutorService executor) {
         if (low < high) {
             int pivot = partition(arr, low, high);
@@ -39,7 +38,6 @@ public class QuickSortParalelo {
         }
     }
 
-   
     private static int partition(int[] arr, int low, int high) {
         int pivot = arr[high];
         int i = (low - 1);
@@ -59,9 +57,9 @@ public class QuickSortParalelo {
         arr[j] = temp;
     }
 
-    public static int[] generateRandomArray(int size){
+    public static int[] generateRandomArray(int size) {
         int[] array = new int[size];
-        for (int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             array[i] = (int) (Math.random() * 1000);
         }
         return array;
@@ -69,15 +67,15 @@ public class QuickSortParalelo {
 
     public static void main(String[] args) {
         ArrayList<String> results = new ArrayList<>();
-        results.add("Tamanho,Threads,Tempo");  
-        int[] sizes = {100,500,1000,3500,5000};
+        results.add("Tamanho,Threads,Tempo");
+        int[] sizes = { 100, 500, 1000, 3500, 5000 };
 
         for (int size : sizes) {
             int[] arraySerial = generateRandomArray(size);
             int[] arrayParallel = null;
 
             long startTime = System.nanoTime();
-            
+
             for (int numThreads = 1; numThreads <= 8; numThreads++) {
                 for (int i = 0; i < 8; i++) {
                     arrayParallel = Arrays.copyOf(arraySerial, arraySerial.length);

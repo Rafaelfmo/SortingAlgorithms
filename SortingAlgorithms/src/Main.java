@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RunPythonScript {
+public class Main {
 
     public static void pythonScript(String type) {
         try {
@@ -17,8 +17,7 @@ public class RunPythonScript {
             int exitCode = process.waitFor();
 
             System.out.println("\nExited with error code : " + exitCode);
-        }
-        catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -37,7 +36,9 @@ public class RunPythonScript {
         QuickSortParalelo.main(args);
         QuickSortSequencial.main(args);
         System.out.println("All algorithms done! Starting python scripts...");
+
         ExecutorService executor = Executors.newFixedThreadPool(8);
+
         executor.submit(() -> pythonScript("serial"));
         executor.submit(() -> pythonScript("paralelo"));
 
