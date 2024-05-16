@@ -29,7 +29,7 @@ public class MergeSortParalelo {
 
         csvData.append("Tamanho,Threads,Tempo\n");
 
-        int[] sizes = { 100, 500, 1000, 3500, 5000 };
+        int[] sizes = { 500, 2000, 5000, 7500, 10000 };
 
         for (int size : sizes) {
             for (int i = 0; i < numRuns; i++) {

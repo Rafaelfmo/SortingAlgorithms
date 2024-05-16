@@ -50,7 +50,7 @@ public class InsertionSortSequencial {
     }
 
     public static void main(String args[]) {
-        int[] sizes = { 100, 500, 1000, 3500, 5000 };
+        int[] sizes = { 500, 2000, 5000, 7500, 10000 };
 
         printExecutionTimes(sizes);
 

@@ -82,7 +82,8 @@ public class InsertionSortParalelo extends RecursiveAction {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         final StringBuilder csvData = new StringBuilder();
-        int[] sizes = { 100, 500, 1000, 3500, 5000 };
+        int[] sizes = { 500, 2000, 5000, 7500, 10000 };
+
         int maxThreads = 8;
         int maxExecutions = 8;
 
@@ -125,7 +126,8 @@ public class InsertionSortParalelo extends RecursiveAction {
             }
         }
 
-        FileWriter csvWriter = new FileWriter("parallel_insertion_sort.csv");
+        FileWriter csvWriter = new FileWriter(
+                "parallel_insertion_sort.csv");
         csvWriter.write(csvData.toString());
         csvWriter.close();
     }

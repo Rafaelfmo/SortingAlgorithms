@@ -1,8 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class BubbleSortSequencial {
 
@@ -19,28 +17,6 @@ public class BubbleSortSequencial {
         }
     }
 
-    public static void parallelBubbleSort(int[] array, int numThreads) {
-        if (numThreads <= 0) {
-            numThreads = Runtime.getRuntime().availableProcessors();
-        }
-        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
-        int chunkSize = array.length / numThreads;
-
-        for (int i = 0; i < numThreads; i++) {
-            int start = i * chunkSize;
-            int end = (i == numThreads - 1) ? array.length : (i + 1) * chunkSize;
-            executor.submit(() -> indexedBubbleSort(array, start, end));
-        }
-
-        executor.shutdown();
-        try {
-            executor.awaitTermination(Long.MAX_VALUE, java.util.concurrent.TimeUnit.NANOSECONDS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public static int[] generateRandomArray(int size) {
         int[] array = new int[size];
         for (int i = 0; i < size; i++) {
@@ -54,13 +30,13 @@ public class BubbleSortSequencial {
         ArrayList<String> results = new ArrayList<>();
         results.add("Tamanho,Tempo");
 
-        int sizes[] = { 100, 500, 1000, 3500, 5000 };
+        int sizes[] = { 500, 2000, 5000, 7500, 10000 };
 
         for (int size : sizes) {
             int[] arraySerial = generateRandomArray(size);
 
             long startTime = System.nanoTime();
-            indexedBubbleSort(arraySerial, 0, 0);
+            indexedBubbleSort(arraySerial, 0, arraySerial.length);
             long endTime = System.nanoTime();
             long serialTime = endTime - startTime;
 
